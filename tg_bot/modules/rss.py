@@ -71,7 +71,6 @@ def list_urls(bot, update):
                          text="<b>Warning:</b> The message is too long to be sent")
 
 
-@user_admin
 def add_url(bot, update, args):
     if len(args) >= 1:
         chat = update.effective_chat
@@ -98,14 +97,13 @@ def add_url(bot, update, args):
             else:
                 sql.add_url(tg_chat_id, tg_feed_link, tg_old_entry_link)
 
-                update.effective_message.reply_text("Added URL to subscription")
+                update.effective_message.reply_text("Umeongeza URL Katika subscription")
         else:
-            update.effective_message.reply_text("This link is not an RSS Feed link")
+            update.effective_message.reply_text("hii link sio kiunganisho cha RSS")
     else:
-        update.effective_message.reply_text("URL missing")
+        update.effective_message.reply_text("URL missing au URL kukosa")
 
 
-@user_admin
 def remove_url(bot, update, args):
     if len(args) >= 1:
         tg_chat_id = str(update.effective_chat.id)
@@ -120,11 +118,11 @@ def remove_url(bot, update, args):
             if user_data:
                 sql.remove_url(tg_chat_id, tg_feed_link)
 
-                update.effective_message.reply_text("Removed URL from subscription")
+                update.effective_message.reply_text("Imefutwa URL Kutoka subscription")
             else:
                 update.effective_message.reply_text("You haven't subscribed to this URL yet")
         else:
-            update.effective_message.reply_text("This link is not an RSS Feed link")
+            update.effective_message.reply_text("Hii link sio kiunganisho cha RSS")
     else:
         update.effective_message.reply_text("URL missing")
 
@@ -163,7 +161,7 @@ def rss_update(bot, job):
         if len(new_entry_links) < 100:
             # this loop sends every new update to each user from each group based on the DB entries
             for link, title in zip(reversed(new_entry_links), reversed(new_entry_titles)):
-                final_message = "<b>{}</b>\n\n{}".format(html.escape(title), html.escape(link))
+                final_message = "<b>{}</b>\n{}".format(html.escape(title), html.escape(link))
 
                 if len(final_message) <= constants.MAX_MESSAGE_LENGTH:
                     bot.send_message(chat_id=tg_chat_id, text=final_message, parse_mode=ParseMode.HTML)
@@ -172,7 +170,7 @@ def rss_update(bot, job):
                                      parse_mode=ParseMode.HTML)
         else:
             for link, title in zip(reversed(new_entry_links[-100:]), reversed(new_entry_titles[-100:])):
-                final_message = "<b>{}</b>\n\n{}".format(html.escape(title), html.escape(link))
+                final_message = "\n<pre>{}</pre>\n\n{}".format(html.escape(title), html.escape(link))
 
                 if len(final_message) <= constants.MAX_MESSAGE_LENGTH:
                     bot.send_message(chat_id=tg_chat_id, text=final_message, parse_mode=ParseMode.HTML)
@@ -216,21 +214,16 @@ def rss_set(bot, job):
 
 
 __help__ = """
-*RSS/Feed*.\nTumia Link za RSS/feeds, Kupost Habari katika group lako kwa kutumia Bot hii\nMfano @Hudma & @HabariTz Tuna tumia RSS feed. Ni Lahisi na Nyepesi.
+`amlizangu`
 
- - /addrss <link>: Kuongeza RSS link Katika list yako.
- - /removerss <link>: kuondoa link ya RSS kutoka kwenye usajili.
- - /rss <link>: Hapa ni sehemu ya kujalibishia rss link yako kama ina fanya kazi.
- - /listrss: Kuona idadi ya RSS link ulizo Sajili Kwa sasa.
+ - /lrs Idadi
+ - /rs Angalia
+ - /frs Futa
 
-*NOTE:* Katika Vikundi au group Viongozi tu ndio wataweza 
-\n1. Add rss link
-\n2. Remove rss link
-\n3. Kuona list ya Rss link ulizo sajili
- ..
+
 """
 
-__mod_name__ = "RSS Feed"
+__mod_name__ = "Hamis"
 
 job = updater.job_queue
 
@@ -239,10 +232,10 @@ job_rss_update = job.run_repeating(rss_update, interval=5, first=5)
 job_rss_set.enabled = True
 job_rss_update.enabled = True
 
-SHOW_URL_HANDLER = CommandHandler("rss", show_url, pass_args=True)
-ADD_URL_HANDLER = CommandHandler("addrss", add_url, pass_args=True)
-REMOVE_URL_HANDLER = CommandHandler("removerss", remove_url, pass_args=True)
-LIST_URLS_HANDLER = CommandHandler("listrss", list_urls)
+SHOW_URL_HANDLER = CommandHandler("rs", show_url, pass_args=True)
+ADD_URL_HANDLER = CommandHandler("ors", add_url, pass_args=True)
+REMOVE_URL_HANDLER = CommandHandler("frs", remove_url, pass_args=True)
+LIST_URLS_HANDLER = CommandHandler("lrs", list_urls)
 
 dispatcher.add_handler(SHOW_URL_HANDLER)
 dispatcher.add_handler(ADD_URL_HANDLER)
