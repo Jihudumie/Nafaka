@@ -19,18 +19,9 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Habari yako {}, Mimi ni Robot Jinalangu ni {}! Kupata Menu zote, Gusa hapo 👉 /help - *Karibu👇 group*  \n\n[Huduma 📶](https://t.me/Huduma)
-
-I'm a group manager bot maintained by [this wonderful person](tg://user?id={}). I'm built in python3, using the \
-python-telegram-bot library, and am fully [opensource](https://t.me/twuwbaa).
-[here](https://t.me/twuwbaa)!
-
-Feel free to submit pull requests on github, or to contact my support group, @Huduma, with any bugs, questions \
-or feature requests you might have :)
-Kwa habari Mbali Mbali itakubidi utembelee channel,👉[Swahili News](https://t.me/HabariTz).\
+Habari yako *{}*, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu zote, Gusa hapo 👉 /help - 
 
 Tumia command hii /help Kupata Menu zote
-
 
 If you're enjoying using me, and/or would like to help me survive in the wild, hit /hamis to help fund/upgrade my VPS!
 """
@@ -387,7 +378,7 @@ def donate(bot: Bot, update: Update):
 
         if OWNER_ID != 254318997 and DONATION_LINK:
             update.effective_message.reply_text("You can also donate to the person currently running me "
-                                                "[here]({})".format(DONATION_LINK),
+                                                "[here]()".format(DONATION_LINK),
                                                 parse_mode=ParseMode.MARKDOWN)
 
     else:
