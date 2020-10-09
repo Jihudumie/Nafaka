@@ -19,23 +19,10 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Habari yako <u>{}</u>, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu zote, Gusa hapo 👉 /help -"""
+Habari yako *{}*, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu zote, Gusa hapo 👉 /help -"""
 
 HELP_STRINGS = """
-Habari yako! Jina langu ni *{}*.
-Mimi ni Robot Alhamdulillah nina uwezo Mkubwa wa kukusaidia 
-Kusimamia gunzo (group) au kikundi chako Hapa Telegram!
- Angalia yafuatayo 👇. \
-Ninayo weza kufanya ndani ya group lako.
-
-*Amri* kuu za kuanzia Kutumia:
- - /start: start the bot
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /khamis: *Maelezo Kuhusu Utengenezaji!*
- - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
+Karibu Katika Menu Zangu *{}*.
 
 {}
 And the following:
