@@ -414,11 +414,12 @@ def main():
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
+    amlizangu_handler = CommandHandler("amlizangu", amlizangu)
+    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
+
     khamis_handler = CommandHandler("khamis", donate)
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
-    amlizangu_handler = CommandHandler("amlizangu", amlizangu)
-    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
@@ -426,8 +427,9 @@ def main():
     dispatcher.add_handler(settings_handler)
     dispatcher.add_handler(help_callback_handler)
     dispatcher.add_handler(settings_callback_handler)
-    dispatcher.add_handler(migrate_handler)
     dispatcher.add_handler(amlizangu_handler)
+    dispatcher.add_handler(migrate_handler)
+    
 
     # dispatcher.add_error_handler(error_callback)
 
