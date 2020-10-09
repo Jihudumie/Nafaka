@@ -23,10 +23,10 @@ Habari yako *{}*, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu zote, Gusa hapo ð
 """
 
 HELP_STRINGS = """
-Karibu Katika Menu Zangu _Mimi_ *{}*.
+Karibu Katika Menu Zangu.
 
 ðŸ‘‰ / or !.
-{}"""
+"""
 DONATE_STRING = """*Assalaam Aleykum* Habaari za Saahizi, Hii nisehemu inayo husu Utengenezaji [my creator](t.me/Twuwbaa).\
 
 Khamis Au Hamis Nimtengenezaji Wa Marobot Hapa Telegram Kama una hitaji Kutengenezewa Robot Kama hili onana na Mimia au nitafute Katika @Huduma
