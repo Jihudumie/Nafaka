@@ -19,12 +19,7 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Habari yako *{}*, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu zote, Gusa hapo 👉 /help - 
-
-Tumia command hii /help Kupata Menu zote
-
-If you're enjoying using me, and/or would like to help me survive in the wild, hit /hamis to help fund/upgrade my VPS!
-"""
+Habari yako <u>{}</u>, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu zote, Gusa hapo 👉 /help -"""
 
 HELP_STRINGS = """
 Habari yako! Jina langu ni *{}*.
