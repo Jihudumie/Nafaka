@@ -161,7 +161,7 @@ def rss_update(bot, job):
         if len(new_entry_links) < 100:
             # this loop sends every new update to each user from each group based on the DB entries
             for link, title in zip(reversed(new_entry_links), reversed(new_entry_titles)):
-                final_message = "<b>{}</b>\n{}".format(html.escape(title), html.escape(link))
+                final_message = "👉@MichezoTz\n\n<b>{}</b>\n{}".format(html.escape(title), html.escape(link))
 
                 if len(final_message) <= constants.MAX_MESSAGE_LENGTH:
                     bot.send_message(chat_id=tg_chat_id, text=final_message, parse_mode=ParseMode.HTML)
