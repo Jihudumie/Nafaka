@@ -23,11 +23,10 @@ Habari yako *{}*, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu zote, Gusa hapo �
 """
 
 HELP_STRINGS = """
-Karibu Katika Menu Zangu {}.
+Karibu Katika Menu Zangu _Mimi_ *{}*.
 
 👉 / or !.
-{}""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAmri au Command zote zinaAnza na Alama hii👉 / au !.\n")
-
+{}"""
 DONATE_STRING = """*Assalaam Aleykum* Habaari za Saahizi, Hii nisehemu inayo husu Utengenezaji [my creator](t.me/Twuwbaa).\
 
 Khamis Au Hamis Nimtengenezaji Wa Marobot Hapa Telegram Kama una hitaji Kutengenezewa Robot Kama hili onana na Mimia au nitafute Katika @Huduma
