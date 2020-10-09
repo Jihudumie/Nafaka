@@ -19,16 +19,46 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Habari yako *{}*, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu zote, Gusa hapo 👉 /help -"""
+Habari yako {}, Mimi ni Robot Jinalangu ni {}! Kupata Menu zote, Gusa hapo 👉 /help - *Karibu👇 group*  \n\n[Huduma 📶](https://t.me/Huduma)
+
+I'm a group manager bot maintained by [this wonderful person](tg://user?id={}). I'm built in python3, using the \
+python-telegram-bot library, and am fully [opensource](https://t.me/twuwbaa).
+[here](https://t.me/twuwbaa)!
+
+Feel free to submit pull requests on github, or to contact my support group, @Huduma, with any bugs, questions \
+or feature requests you might have :)
+Kwa habari Mbali Mbali itakubidi utembelee channel,👉[Swahili News](https://t.me/HabariTz).\
+
+Tumia command hii /help Kupata Menu zote
+
+
+If you're enjoying using me, and/or would like to help me survive in the wild, hit /hamis to help fund/upgrade my VPS!
+"""
 
 HELP_STRINGS = """
-Karibu Katika Menu Zangu *{}*.
+Habari yako! Jina langu ni *{}*.
+Mimi ni Robot Alhamdulillah nina uwezo Mkubwa wa kukusaidia 
+Kusimamia gunzo (group) au kikundi chako Hapa Telegram!
+ Angalia yafuatayo 👇. \
+Ninayo weza kufanya ndani ya group lako.
+
+*Amri* kuu za kuanzia Kutumia:
+ - /start: start the bot
+ - /help: PM's you this message.
+ - /help <module name>: PM's you info about that module.
+ - /khamis: *Maelezo Kuhusu Utengenezaji!*
+ - /settings:
+   - in PM: will send you your settings for all supported modules.
+   - in a group: will redirect you to pm, with all that chat's settings.
 
 {}
 And the following:
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAmri au Command zote zinaAnza na Alama hii👉 / au !.\n")
 
-DONATE_STRING = "@ViongoziBot"
+DONATE_STRING = """*Assalaam Aleykum* Habaari za Saahizi, Hii nisehemu inayo husu Utengenezaji [my creator](t.me/Twuwbaa).\
+
+Khamis Au Hamis Nimtengenezaji Wa Marobot Hapa Telegram Kama una hitaji Kutengenezewa Robot Kama hili onana na Mimia au nitafute Katika @Huduma
+"""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -357,7 +387,7 @@ def donate(bot: Bot, update: Update):
 
         if OWNER_ID != 254318997 and DONATION_LINK:
             update.effective_message.reply_text("You can also donate to the person currently running me "
-                                                "[here]()".format(DONATION_LINK),
+                                                "[here]({})".format(DONATION_LINK),
                                                 parse_mode=ParseMode.MARKDOWN)
 
     else:
@@ -401,7 +431,6 @@ def main():
     khamis_handler = CommandHandler("khamis", donate)
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
-
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(help_handler)
@@ -409,7 +438,7 @@ def main():
     dispatcher.add_handler(help_callback_handler)
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
-    
+    dispatcher.add_handler(khamis_handler)
 
     # dispatcher.add_error_handler(error_callback)
 
