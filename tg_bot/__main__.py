@@ -28,9 +28,15 @@ Karibu Katika Menu Zangu *{}*.
 And the following:
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAmri au Command zote zinaAnza na Alama hii👉 / au !.\n")
 
-DONATE_STRING = """*Assalaam Aleykum* Habaari za Saahizi, Hii nisehemu inayo husu Utengenezaji [my creator](t.me/Twuwbaa).\
+DONATE_STRING = "@ViongoziBot"
+AMLIZETU = """
+1. /ors Ongejaga
 
-Khamis Au Hamis Nimtengenezaji Wa Marobot Hapa Telegram Kama una hitaji Kutengenezewa Robot Kama hili onana na Mimia au nitafute Katika @Huduma
+2. /frs Futaga
+
+3. /rs lolaga 👀
+
+4. /lrs idadi
 """
 
 IMPORTED = {}
@@ -349,6 +355,13 @@ def get_settings(bot: Bot, update: Update):
     else:
         send_settings(chat.id, user.id, True)
 
+@run_async
+def amlizangu(bot: Bot, update: Update):
+    user = update.effective_message.from_user
+    chat = update.effective_chat  # type: Optional[Chat]
+
+    if chat.type == "private":
+        update.effective_message.reply_text(AMLIZETU, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def donate(bot: Bot, update: Update):
@@ -404,6 +417,9 @@ def main():
     khamis_handler = CommandHandler("khamis", donate)
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
+    amlizangu_handler = CommandHandler("amlizangu", amlizangu)
+    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
+
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(help_handler)
@@ -411,7 +427,7 @@ def main():
     dispatcher.add_handler(help_callback_handler)
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
-    dispatcher.add_handler(khamis_handler)
+    dispatcher.add_handler(amlizangu_handler)
 
     # dispatcher.add_error_handler(error_callback)
 
