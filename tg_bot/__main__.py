@@ -19,13 +19,13 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Habari yako *{}*, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu zote, Gusa hapo 👉 /help -
+Habari yako *{}*, Mimi ni Robot Jinalangu ni *{}*! Kupata Menu Zangu zote, Gusa hapo 👉 /help -
 """
 
 HELP_STRINGS = """
 Karibu Katika Menu Zangu.
 
-👉 / or !.
+Anza na Alama hii 👉 / or !.
 """
 DONATE_STRING = """*Assalaam Aleykum* Habaari za Saahizi, Hii nisehemu inayo husu Utengenezaji [my creator](t.me/Twuwbaa).\
 Khamis Au Hamis Nimtengenezaji Wa Marobot Hapa Telegram Kama una hitaji Kutengenezewa Robot Kama hili onana na Mimia au nitafute Katika @Huduma
