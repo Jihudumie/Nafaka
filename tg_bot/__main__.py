@@ -27,7 +27,9 @@ Karibu Katika Menu Zangu.
 
 👉 / or !.
 """
-DONATE_STRING = "*Assalaam Aleykum* Habaari za Saahizi, Hii nisehemu inayo husu Utengenezaji [my creator](t.me/Twuwbaa).\"
+DONATE_STRING = """*Assalaam Aleykum* Habaari za Saahizi, Hii nisehemu inayo husu Utengenezaji [my creator](t.me/Twuwbaa).\
+Khamis Au Hamis Nimtengenezaji Wa Marobot Hapa Telegram Kama una hitaji Kutengenezewa Robot Kama hili onana na Mimia au nitafute Katika @Huduma
+"""
 AMLIZETU = """
 1. /ors Ongejaga
 
@@ -37,10 +39,6 @@ AMLIZETU = """
 
 4. /lrs idadi
 """
-
-Khamis Au Hamis Nimtengenezaji Wa Marobot Hapa Telegram Kama una hitaji Kutengenezewa Robot Kama hili onana na Mimia au nitafute Katika @Huduma
-"""
-
 IMPORTED = {}
 MIGRATEABLE = []
 HELPABLE = {}
