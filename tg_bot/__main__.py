@@ -27,7 +27,7 @@ Karibu Katika Menu Zangu.
 
 👉 / or !.
 """
-DONATE_STRING = """*Assalaam Aleykum* Habaari za Saahizi, Hii nisehemu inayo husu Utengenezaji [my creator](t.me/Twuwbaa).\
+DONATE_STRING = "*Assalaam Aleykum* Habaari za Saahizi, Hii nisehemu inayo husu Utengenezaji [my creator](t.me/Twuwbaa).\"
 AMLIZETU = """
 1. /ors Ongejaga
 
