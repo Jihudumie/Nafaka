@@ -63,7 +63,7 @@ def list_urls(bot, update):
 
     # check if the length of the message is too long to be posted in 1 chat bubble
     if len(final_content) == 0:
-        bot.send_message(chat_id=tg_chat_id, text="Katika chat hii Hauja sajiri kiunga cha Rss au link yeyote ")
+        bot.send_message(chat_id=tg_chat_id, text="This chat is not subscribed to any links")
     elif len(final_content) <= constants.MAX_MESSAGE_LENGTH:
         bot.send_message(chat_id=tg_chat_id, text="This chat is subscribed to the following links:\n" + final_content)
     else:
@@ -71,6 +71,7 @@ def list_urls(bot, update):
                          text="<b>Warning:</b> The message is too long to be sent")
 
 
+@user_admin
 def add_url(bot, update, args):
     if len(args) >= 1:
         chat = update.effective_chat
@@ -97,13 +98,14 @@ def add_url(bot, update, args):
             else:
                 sql.add_url(tg_chat_id, tg_feed_link, tg_old_entry_link)
 
-                update.effective_message.reply_text("Umeongeza URL Katika subscription")
+                update.effective_message.reply_text("Added URL to subscription")
         else:
-            update.effective_message.reply_text("hii link sio kiunganisho cha RSS")
+            update.effective_message.reply_text("This link is not an RSS Feed link")
     else:
-        update.effective_message.reply_text("URL missing au URL kukosa")
+        update.effective_message.reply_text("URL missing")
 
 
+@user_admin
 def remove_url(bot, update, args):
     if len(args) >= 1:
         tg_chat_id = str(update.effective_chat.id)
@@ -118,11 +120,11 @@ def remove_url(bot, update, args):
             if user_data:
                 sql.remove_url(tg_chat_id, tg_feed_link)
 
-                update.effective_message.reply_text("Imefutwa URL Kutoka subscription")
+                update.effective_message.reply_text("Removed URL from subscription")
             else:
                 update.effective_message.reply_text("You haven't subscribed to this URL yet")
         else:
-            update.effective_message.reply_text("Hii link sio kiunganisho cha RSS")
+            update.effective_message.reply_text("This link is not an RSS Feed link")
     else:
         update.effective_message.reply_text("URL missing")
 
@@ -158,10 +160,10 @@ def rss_update(bot, job):
         else:
             pass
 
-        if len(new_entry_links) < 100:
+        if len(new_entry_links) < 10:
             # this loop sends every new update to each user from each group based on the DB entries
             for link, title in zip(reversed(new_entry_links), reversed(new_entry_titles)):
-                final_message = "<b>{}</b>\n{}".format(html.escape(title), html.escape(link))
+                final_message = "<b>{}</b>\n\n{}".format(html.escape(title), html.escape(link))
 
                 if len(final_message) <= constants.MAX_MESSAGE_LENGTH:
                     bot.send_message(chat_id=tg_chat_id, text=final_message, parse_mode=ParseMode.HTML)
@@ -169,8 +171,8 @@ def rss_update(bot, job):
                     bot.send_message(chat_id=tg_chat_id, text="<b>Warning:</b> The message is too long to be sent",
                                      parse_mode=ParseMode.HTML)
         else:
-            for link, title in zip(reversed(new_entry_links[-100:]), reversed(new_entry_titles[-100:])):
-                final_message = "\n<pre>{}</pre>\n\n{}".format(html.escape(title), html.escape(link))
+            for link, title in zip(reversed(new_entry_links[-10:]), reversed(new_entry_titles[-10:])):
+                final_message = "<b>{}</b>\n\n{}".format(html.escape(title), html.escape(link))
 
                 if len(final_message) <= constants.MAX_MESSAGE_LENGTH:
                     bot.send_message(chat_id=tg_chat_id, text=final_message, parse_mode=ParseMode.HTML)
@@ -180,7 +182,7 @@ def rss_update(bot, job):
 
             bot.send_message(chat_id=tg_chat_id, parse_mode=ParseMode.HTML,
                              text="<b>Warning: </b>{} occurrences have been left out to prevent spam"
-                             .format(len(new_entry_links) - 100))
+                             .format(len(new_entry_links) - 10))
 
 
 def rss_set(bot, job):
@@ -214,28 +216,27 @@ def rss_set(bot, job):
 
 
 __help__ = """
-`amlizangu`
+ - /addrss <link>: add an RSS link to the subscriptions.
+ - /removerss <link>: removes the RSS link from the subscriptions.
+ - /rss <link>: shows the link's data and the last entry, for testing purposes.
+ - /listrss: shows the list of rss feeds that the chat is currently subscribed to.
 
- - /lrs Idadi
- - /rs Angalia
- - /frs Futa
-
-
+NOTE: In groups, only admins can add/remove RSS links to the group's subscription
 """
 
-__mod_name__ = "Kiunga ↻"
+__mod_name__ = "RSS Feed"
 
 job = updater.job_queue
 
-job_rss_set = job.run_once(rss_set, 100)
-job_rss_update = job.run_repeating(rss_update, interval=5, first=5)
+job_rss_set = job.run_once(rss_set, 10)
+job_rss_update = job.run_repeating(rss_update, interval=10, first=10)
 job_rss_set.enabled = True
 job_rss_update.enabled = True
 
-SHOW_URL_HANDLER = CommandHandler("rs", show_url, pass_args=True)
-ADD_URL_HANDLER = CommandHandler("ors", add_url, pass_args=True)
-REMOVE_URL_HANDLER = CommandHandler("frs", remove_url, pass_args=True)
-LIST_URLS_HANDLER = CommandHandler("lrs", list_urls)
+SHOW_URL_HANDLER = CommandHandler("rss", show_url, pass_args=True)
+ADD_URL_HANDLER = CommandHandler("addrss", add_url, pass_args=True)
+REMOVE_URL_HANDLER = CommandHandler("removerss", remove_url, pass_args=True)
+LIST_URLS_HANDLER = CommandHandler("listrss", list_urls)
 
 dispatcher.add_handler(SHOW_URL_HANDLER)
 dispatcher.add_handler(ADD_URL_HANDLER)
