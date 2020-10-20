@@ -18,26 +18,26 @@ def show_url(bot, update, args):
         link_processed = parse(tg_feed_link)
 
         if link_processed.bozo == 0:
-            feed_description = link_processed.feed.get("description", default="Unknown")
+            feed_title = link_processed.feed.get("title", default="Unknown")
             feed_description = "<i>{}</i>".format(
                 re.sub('<[^<]+?>', '', link_processed.feed.get("description", default="Unknown")))
             feed_link = link_processed.feed.get("link", default="Unknown")
 
-            feed_message = "<b>Feed description:</b> \n{}" \
+            feed_message = "<b>Feed Title:</b> \n{}" \
                            "\n\n<b>Feed Description:</b> \n{}" \
-                           "\n\n<b>Feed Link:</b> \n{}".format(html.escape(feed_description),
+                           "\n\n<b>Feed Link:</b> \n{}".format(html.escape(feed_title),
                                                                feed_description,
                                                                html.escape(feed_link))
 
             if len(link_processed.entries) >= 1:
-                entry_description = link_processed.entries[0].get("description", default="Unknown")
+                entry_title = link_processed.entries[0].get("title", default="Unknown")
                 entry_description = "<i>{}</i>".format(
                     re.sub('<[^<]+?>', '', link_processed.entries[0].get("description", default="Unknown")))
                 entry_link = link_processed.entries[0].get("link", default="Unknown")
 
-                entry_message = "\n\n<b>Entry description:</b> \n{}" \
+                entry_message = "\n\n<b>Entry Title:</b> \n{}" \
                                 "\n\n<b>Entry Description:</b> \n{}" \
-                                "\n\n<b>Entry Link:</b> \n{}".format(html.escape(entry_description),
+                                "\n\n<b>Entry Link:</b> \n{}".format(html.escape(entry_title),
                                                                      entry_description,
                                                                      html.escape(entry_link))
                 final_message = feed_message + entry_message
@@ -63,7 +63,7 @@ def list_urls(bot, update):
 
     # check if the length of the message is too long to be posted in 1 chat bubble
     if len(final_content) == 0:
-        bot.send_message(chat_id=tg_chat_id, text="Katika chat hii Hauja sajiri kiunga cha Rss au link yeyote ")
+        bot.send_message(chat_id=tg_chat_id, text="This chat is not subscribed to any links")
     elif len(final_content) <= constants.MAX_MESSAGE_LENGTH:
         bot.send_message(chat_id=tg_chat_id, text="This chat is subscribed to the following links:\n" + final_content)
     else:
