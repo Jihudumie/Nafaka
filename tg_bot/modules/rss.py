@@ -197,14 +197,14 @@ def rss_set(bot, job):
         feed_processed = parse(tg_feed_link)
 
         new_entry_links = []
-        new_entry_descriptions = []
+        new_entry_titles = []
 
         # this loop checks for every entry from the RSS Feed link from the DB row
         for entry in feed_processed.entries:
             # check if there are any new updates to the RSS Feed from the old entry
             if entry.link != tg_old_entry_link:
                 new_entry_links.append(entry.link)
-                new_entry_descriptions.append(entry.description)
+                new_entry_titles.append(entry.title)
             else:
                 break
 
