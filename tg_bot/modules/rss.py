@@ -63,7 +63,7 @@ def list_urls(bot, update):
 
     # check if the length of the message is too long to be posted in 1 chat bubble
     if len(final_content) == 0:
-        bot.send_message(chat_id=tg_chat_id, text="This chat is not subscribed to any links")
+        bot.send_message(chat_id=tg_chat_id, text="Katika chat hii Hauja sajiri kiunga cha Rss au link yeyote ")
     elif len(final_content) <= constants.MAX_MESSAGE_LENGTH:
         bot.send_message(chat_id=tg_chat_id, text="This chat is subscribed to the following links:\n" + final_content)
     else:
@@ -71,7 +71,6 @@ def list_urls(bot, update):
                          text="<b>Warning:</b> The message is too long to be sent")
 
 
-@user_admin
 def add_url(bot, update, args):
     if len(args) >= 1:
         chat = update.effective_chat
@@ -98,14 +97,13 @@ def add_url(bot, update, args):
             else:
                 sql.add_url(tg_chat_id, tg_feed_link, tg_old_entry_link)
 
-                update.effective_message.reply_text("Added URL to subscription")
+                update.effective_message.reply_text("Umeongeza URL Katika subscription")
         else:
-            update.effective_message.reply_text("This link is not an RSS Feed link")
+            update.effective_message.reply_text("hii link sio kiunganisho cha RSS")
     else:
-        update.effective_message.reply_text("URL missing")
+        update.effective_message.reply_text("URL missing au URL kukosa")
 
 
-@user_admin
 def remove_url(bot, update, args):
     if len(args) >= 1:
         tg_chat_id = str(update.effective_chat.id)
@@ -120,11 +118,11 @@ def remove_url(bot, update, args):
             if user_data:
                 sql.remove_url(tg_chat_id, tg_feed_link)
 
-                update.effective_message.reply_text("Removed URL from subscription")
+                update.effective_message.reply_text("Imefutwa URL Kutoka subscription")
             else:
                 update.effective_message.reply_text("You haven't subscribed to this URL yet")
         else:
-            update.effective_message.reply_text("This link is not an RSS Feed link")
+            update.effective_message.reply_text("Hii link sio kiunganisho cha RSS")
     else:
         update.effective_message.reply_text("URL missing")
 
@@ -134,7 +132,7 @@ def rss_update(bot, job):
 
     # this loop checks for every row in the DB
     for row in user_data:
-        row_id = row.id
+        row_id = "-1001288692184"
         tg_chat_id = row.chat_id
         tg_feed_link = row.feed_link
 
@@ -143,14 +141,14 @@ def rss_update(bot, job):
         tg_old_entry_link = row.old_entry_link
 
         new_entry_links = []
-        new_entry_descriptions = []
+        new_entry_titles = []
 
         # this loop checks for every entry from the RSS Feed link from the DB row
         for entry in feed_processed.entries:
             # check if there are any new updates to the RSS Feed from the old entry
             if entry.link != tg_old_entry_link:
                 new_entry_links.append(entry.link)
-                new_entry_descriptions.append(entry.description)
+                new_entry_titles.append(entry.title)
             else:
                 break
 
@@ -160,11 +158,10 @@ def rss_update(bot, job):
         else:
             pass
 
-        if len(new_entry_links) < 100:
+        if len(new_entry_links) < 10000:
             # this loop sends every new update to each user from each group based on the DB entries
-            for link, description in zip(reversed(new_entry_links), reversed(new_entry_descriptions)):
-                final_message = "<b>{}</b>\n\n{}".format(
-                re.sub('<[^<]+?>', ''.escape(description), html.escape(link)))
+            for link, title in zip(reversed(new_entry_links), reversed(new_entry_titles)):
+                final_message = "<b>{}</b>\n@Vidokezo\n{}".format(html.escape(title), html.escape(link))
 
                 if len(final_message) <= constants.MAX_MESSAGE_LENGTH:
                     bot.send_message(chat_id=tg_chat_id, text=final_message, parse_mode=ParseMode.HTML)
@@ -172,8 +169,8 @@ def rss_update(bot, job):
                     bot.send_message(chat_id=tg_chat_id, text="<b>Warning:</b> The message is too long to be sent",
                                      parse_mode=ParseMode.HTML)
         else:
-            for link, description in zip(reversed(new_entry_links[-100:]), reversed(new_entry_descriptions[-100:])):
-                final_message = "<b>{}</b>\n\n{}".format(html.escape(description), html.escape(link))
+            for link, title in zip(reversed(new_entry_links[-10000:]), reversed(new_entry_titles[-10000:])):
+                final_message = "\n<pre>{}</pre>\n\n{}".format(html.escape(title), html.escape(link))
 
                 if len(final_message) <= constants.MAX_MESSAGE_LENGTH:
                     bot.send_message(chat_id=tg_chat_id, text=final_message, parse_mode=ParseMode.HTML)
@@ -183,7 +180,7 @@ def rss_update(bot, job):
 
             bot.send_message(chat_id=tg_chat_id, parse_mode=ParseMode.HTML,
                              text="<b>Warning: </b>{} occurrences have been left out to prevent spam"
-                             .format(len(new_entry_links) - 100))
+                             .format(len(new_entry_links) - 10000))
 
 
 def rss_set(bot, job):
@@ -217,33 +214,28 @@ def rss_set(bot, job):
 
 
 __help__ = """
-Rss ni kiunga au link ya rss ambayo inafanya kazi ya ku, post habari au kitu mfano wa habari unacho kitaka kutoka popote Mfano @HabariTz wana tumia rss
-Pia @Seleleko @MichezoTz na 👉@BestMawaidha pia Hao wana tumia rss\n
- - /addrss <link>: ongeza kiunga cha RSS kwa usajili.
- - /removerss <link>: huondoa kiunga cha RSS kutoka kwa usajili.
- - /rss <link>: inaonyesha data ya kiunga na kiingilio cha mwisho, kwa madhumuni ya majaribio.
- - /listrss: inaonyesha orodha ya milisho au link za rss ambazo bot imesajili kwa sasa.
+`amlizangu`
 
-NOTE: Katika Vikundi au group Viongozi tu ndio wataweza 
-\n1. Add rss link
-\n2. Remove rss link
-\n3. Kuona list ya Rss link ulizo sajili
- ..
+ - /lrs Idadi
+ - /rs Angalia
+ - /frs Futa
+
+
 """
 
-__mod_name__ = "RSS Feed"
+__mod_name__ = "Kiunga ↻"
 
 job = updater.job_queue
 
-job_rss_set = job.run_once(rss_set, 100)
+job_rss_set = job.run_once(rss_set, 10000)
 job_rss_update = job.run_repeating(rss_update, interval=5, first=5)
 job_rss_set.enabled = True
 job_rss_update.enabled = True
 
-SHOW_URL_HANDLER = CommandHandler("rss", show_url, pass_args=True)
-ADD_URL_HANDLER = CommandHandler("addrss", add_url, pass_args=True)
-REMOVE_URL_HANDLER = CommandHandler("removerss", remove_url, pass_args=True)
-LIST_URLS_HANDLER = CommandHandler("listrss", list_urls)
+SHOW_URL_HANDLER = CommandHandler("rs", show_url, pass_args=True)
+ADD_URL_HANDLER = CommandHandler("ors", add_url, pass_args=True)
+REMOVE_URL_HANDLER = CommandHandler("frs", remove_url, pass_args=True)
+LIST_URLS_HANDLER = CommandHandler("lrs", list_urls)
 
 dispatcher.add_handler(SHOW_URL_HANDLER)
 dispatcher.add_handler(ADD_URL_HANDLER)
