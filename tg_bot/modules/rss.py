@@ -133,7 +133,7 @@ def rss_update(bot, job):
     # this loop checks for every row in the DB
     for row in user_data:
         row_id = row.id
-        tg_chat_id = "-1001288692184"
+        tg_chat_id = row.chat_id
         tg_feed_link = row.feed_link
 
         feed_processed = parse(tg_feed_link)
